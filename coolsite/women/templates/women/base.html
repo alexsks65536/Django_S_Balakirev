@@ -1,17 +1,28 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>{{ Title }}</title>
-    <link type='text/css' href="{% static 'women/css/styles.css' %}" rel="stylesheet" />
+  <title>{{ Title }}</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <link type='text/css' href="{% static 'women/css/style.css' %}" rel="stylesheet" />
 </head>
+
 <body>
-    {% block mainmenu %}
-        <div class="header">
-            <li class="logo"><a href="{% url 'home' %}">Домой</a></li>
-        <ul id="mainmenu" class="mainmenu">
-            <li class="logo"><a href="#"><div class="logo"></div></a></li>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html">simple<span class="logo_colour">style_horizon</span></a></h1>
+          <h2>Simple. Contemporary. Website Template.</h2>
+        </div>
+      </div>
+      <div id="menubar">
+        {% block mainmenu %}
+          <ul id="menu">
+            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
             {% for m in menu %}
                 {% if not forloop.last %}
                     <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
@@ -19,13 +30,37 @@
                     <li class="last"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
                 {% endif %}
             {% endfor %}
-        </ul>
-    <!-- категории -->
+
+          </ul>
+        {% endblock mainmenu %}
+      </div>
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="banner"></div>
+	  <div id="sidebar_container">
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <!-- insert your sidebar items here -->
+            <h3>Latest News</h3>
+            <h4>New Website Launched</h4>
+            <h5>February 1st, 2014</h5>
+            <p>2014 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Useful Links</h3>
+            <!-- ????????? -->
+    {% block leftmenu %}
         <ul class="">
             {% if cat_selected == 0 %}
-                <li class="selected">Все категории</li>
+                <li class="selected">??? ?????????</li>
             {% else %}
-                <li><a href="{% url 'home' %}">Все категории</a></li>
+                <li><a href="{% url 'home' %}">??? ?????????</a></li>
             {% endif %}
 
             {% for c in cats %}
@@ -35,12 +70,33 @@
                     <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
                 {% endif %}
             {% endfor %}
-
         </ul>
+    {% endblock leftmenu %}
+          </div>
+          <div class="sidebar_base"></div>
         </div>
-    {% endblock mainmenu %}
-
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Search</h3>
+            <form method="post" action="#" id="search_form">
+              <p>
+                <input class="search" type="text" name="search_field" value="Enter keywords....." />
+                <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
+              </p>
+            </form>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+      </div>
     {% block content %}
     {% endblock content %}
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      <p><a href="index.html">Home</a> | <a href="examples.html">Examples</a> | <a href="page.html">A Page</a> | <a href="another_page.html">Another Page</a> | <a href="contact.html">Contact Us</a></p>
+      <p>Copyright &copy; simplestyle_horizon | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">Simple web templates by HTML5</a></p>
+    </div>
+  </div>
 </body>
 </html>
