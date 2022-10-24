@@ -5,7 +5,7 @@
   <title>{{ Title }}</title>
   <meta name="description" content="website description" />
   <meta name="keywords" content="website keywords, website keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <link type='text/css' href="{% static 'women/css/style.css' %}" rel="stylesheet" />
 </head>
 
@@ -15,25 +15,24 @@
       <div id="logo">
         <div id="logo_text">
           <!-- class="logo_colour", allows you to change the colour of the text -->
-          <h1><a href="index.html">simple<span class="logo_colour">style_horizon</span></a></h1>
-          <h2>Simple. Contemporary. Website Template.</h2>
+          <h1><a href="/">Django<span class="logo_colour">framework</span></a></h1>
+          <h2>Уроки Django. Сайт биографий знаменитых женщин</h2>
         </div>
       </div>
-      <div id="menubar">
         {% block mainmenu %}
+      <div id="menubar">
           <ul id="menu">
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
             {% for m in menu %}
                 {% if not forloop.last %}
-                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                    <li class=""><a href="{% url m.url_name %}">{{m.title}}</a></li>
                 {% else %}
-                    <li class="last"><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                    <li class=""><a href="{% url m.url_name %}">{{ m.title }}</a></li>
                 {% endif %}
             {% endfor %}
-
           </ul>
-        {% endblock mainmenu %}
       </div>
+        {% endblock mainmenu %}
     </div>
     <div id="content_header"></div>
     <div id="site_content">
@@ -43,35 +42,35 @@
           <div class="sidebar_top"></div>
           <div class="sidebar_item">
             <!-- insert your sidebar items here -->
-            <h3>Latest News</h3>
-            <h4>New Website Launched</h4>
-            <h5>February 1st, 2014</h5>
-            <p>2014 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+            <h3>Левое меню</h3>
+            <h4>Знаменитые женщины</h4>
+            <h5>Октябрь 25, 2022</h5>
+            <p>Сайт биографий знаменитых женщин<br /><a href="/">Читать ...</a></p>
           </div>
           <div class="sidebar_base"></div>
         </div>
         <div class="sidebar">
           <div class="sidebar_top"></div>
+            <!-- Категории -->
           <div class="sidebar_item">
-            <h3>Useful Links</h3>
-            <!-- ????????? -->
-    {% block leftmenu %}
-        <ul class="">
-            {% if cat_selected == 0 %}
-                <li class="selected">??? ?????????</li>
-            {% else %}
-                <li><a href="{% url 'home' %}">??? ?????????</a></li>
-            {% endif %}
+            <h3>Категории</h3>
+                {% block leftmenu %}
+                    <ul class="">
+                        {% if cat_selected == 0 %}
+                            <li class="selected">Все категории</li>
+                        {% else %}
+                            <li><a href="{% url 'home' %}">категории</a></li>
+                        {% endif %}
 
-            {% for c in cats %}
-                {% if c.pk == cat_selected %}
-                    <li class="selected">{{c.name}}</li>
-                {% else %}
-                    <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-    {% endblock leftmenu %}
+                        {% for c in cats %}
+                            {% if c.pk == cat_selected %}
+                                <li class="selected">{{c.name}}</li>
+                            {% else %}
+                                <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endblock leftmenu %}
           </div>
           <div class="sidebar_base"></div>
         </div>
@@ -82,15 +81,17 @@
             <form method="post" action="#" id="search_form">
               <p>
                 <input class="search" type="text" name="search_field" value="Enter keywords....." />
-                <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="style/search.png" alt="Search" title="Search" />
+                <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'women/images/search.png' %}" alt="Search" title="Search" />
               </p>
             </form>
           </div>
           <div class="sidebar_base"></div>
         </div>
       </div>
+        <div id="content">
     {% block content %}
     {% endblock content %}
+            </div>
     </div>
     <div id="content_footer"></div>
     <div id="footer">
