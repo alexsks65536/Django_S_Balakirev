@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Women(models.Model):
@@ -8,6 +9,28 @@ class Women(models.Model):
     time_create = models.DateField(auto_now_add=True)
     time_update = models.DateField(auto_now=True)
     is_published = models.BooleanField(default=True)
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return self.title  # возвращает заголовок текущей записи
+
+    def get_absolute_url(self):
+        """
+        Формирует абсолютный url для шаблона
+        :return:
+        """
+        return reverse('post', kwargs={'post_id': self.pk})
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100, db_index=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """
+        Формирует абсолютный url для шаблона
+        :return:
+        """
+        return reverse('category', kwargs={'cat_id': self.pk})
