@@ -21,6 +21,14 @@ class Women(models.Model):
         """
         return reverse('post', kwargs={'post_id': self.pk})
 
+    class Meta:
+        """
+        Отображает имя приложения в админ панели в ед. и множественном числе
+        """
+        verbose_name = 'Известные женщины'
+        verbose_name_plural = 'Известные женщины'
+        ordering = ['time_create', 'title']  # сортировка по времени
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True)
