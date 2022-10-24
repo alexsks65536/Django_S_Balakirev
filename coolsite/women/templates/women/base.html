@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>{{ Title }}</title>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link type='text/css' href="{% static 'women/css/style.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="/">Django<span class="logo_colour">framework</span></a></h1>
+          <h2>Уроки Django. Сайт биографий знаменитых женщин</h2>
+        </div>
+      </div>
+        {% block mainmenu %}
+      <div id="menubar">
+          <ul id="menu">
+            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+            {% for m in menu %}
+                {% if not forloop.last %}
+                    <li class=""><a href="{% url m.url_name %}">{{m.title}}</a></li>
+                {% else %}
+                    <li class=""><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+          </ul>
+      </div>
+        {% endblock mainmenu %}
+    </div>
+    <div id="content_header"></div>
+    <div id="site_content">
+      <div id="banner"></div>
+	  <div id="sidebar_container">
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <!-- insert your sidebar items here -->
+            <h3>Левое меню</h3>
+            <h4>Знаменитые женщины</h4>
+            <h5>Октябрь 25, 2022</h5>
+            <p>Сайт биографий знаменитых женщин<br /><a href="/">Читать ...</a></p>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+            <!-- Категории -->
+          <div class="sidebar_item">
+            <h3>Категории</h3>
+                {% block leftmenu %}
+                    <ul class="">
+                        {% if cat_selected == 0 %}
+                            <li class="selected">Все категории</li>
+                        {% else %}
+                            <li><a href="{% url 'home' %}">категории</a></li>
+                        {% endif %}
+
+                        {% for c in cats %}
+                            {% if c.pk == cat_selected %}
+                                <li class="selected">{{c.name}}</li>
+                            {% else %}
+                                <li><a href="{{ c.get_absolute_url }}">{{c.name}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endblock leftmenu %}
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+        <div class="sidebar">
+          <div class="sidebar_top"></div>
+          <div class="sidebar_item">
+            <h3>Search</h3>
+            <form method="post" action="#" id="search_form">
+              <p>
+                <input class="search" type="text" name="search_field" value="Enter keywords....." />
+                <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="{% static 'women/images/search.png' %}" alt="Search" title="Search" />
+              </p>
+            </form>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+      </div>
+        <div id="content">
+    {% block content %}
+    {% endblock content %}
+            </div>
+    </div>
+    <div id="content_footer"></div>
+    <div id="footer">
+      <p><a href="index.html">Home</a> | <a href="examples.html">Examples</a> | <a href="page.html">A Page</a> | <a href="another_page.html">Another Page</a> | <a href="contact.html">Contact Us</a></p>
+      <p>Copyright &copy; simplestyle_horizon | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">Simple web templates by HTML5</a></p>
+    </div>
+  </div>
+</body>
+</html>
