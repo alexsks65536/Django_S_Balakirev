@@ -3,13 +3,13 @@ from django.urls import reverse
 
 
 class Women(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField(blank=True)
-    photo = models.ImageField(upload_to="photos/%Y/%m/%d/")
-    time_create = models.DateField(auto_now_add=True)
-    time_update = models.DateField(auto_now=True)
-    is_published = models.BooleanField(default=True)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
+    title = models.CharField(max_length=255, verbose_name="Заголовок")
+    content = models.TextField(blank=True, verbose_name="Текст статьи")
+    photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото")
+    time_create = models.DateField(auto_now_add=True, verbose_name="Время создания")
+    time_update = models.DateField(auto_now=True, verbose_name="Время изменения")
+    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, null=True, verbose_name="Категория")
 
     def __str__(self):
         return self.title  # возвращает заголовок текущей записи
@@ -22,16 +22,13 @@ class Women(models.Model):
         return reverse('post', kwargs={'post_id': self.pk})
 
     class Meta:
-        """
-        Отображает имя приложения в админ панели в ед. и множественном числе
-        """
         verbose_name = 'Известные женщины'
         verbose_name_plural = 'Известные женщины'
-        ordering = ['time_create', 'title']  # сортировка по времени
+        ordering = ['time_create', 'title']
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, db_index=True)
+    name = models.CharField(max_length=100, db_index=True, verbose_name="Категория")
 
     def __str__(self):
         return self.name
@@ -42,3 +39,8 @@ class Category(models.Model):
         :return:
         """
         return reverse('category', kwargs={'cat_id': self.pk})
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['id']
