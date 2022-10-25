@@ -19,3 +19,4 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Women, WomenAdmin)
 admin.site.register(Category, CategoryAdmin)
+

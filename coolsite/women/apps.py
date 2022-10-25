@@ -6,3 +6,4 @@ class WomenConfig(AppConfig):
     name = 'women'
     verbose_name = 'Женщины мира'
 
+
