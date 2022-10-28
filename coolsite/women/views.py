@@ -3,6 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import *
 
+"""
+Главное меню
+"""
 menu = [{'title': 'О сайте', 'url_name': 'about'},
         {'title': 'Добавить статью', 'url_name': 'addpage'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
@@ -42,6 +45,9 @@ def pageNotFound(request, exception):
 
 
 def show_post(request, post_slug):
+    """
+    Функция отображения поста, выбирает по slug-ам
+    """
     post = get_object_or_404(Women, slug=post_slug)
 
     context = {
@@ -54,25 +60,12 @@ def show_post(request, post_slug):
     return render(request, 'women/post.html', context=context)
 
 
-# def show_category(request, cat_slug):
-#     posts = Women.objects.filter(
-#         slug=cat_slug)  # Подключаемся к БД Women, считываем все значения и передаем в шаблон переменные
-#
-#     if len(posts) == 0:  # если нет такой категории, генерирует "Страница на найдена"
-#         raise Http404()
-#
-#     context = {
-#         'posts': posts,
-#         'menu': menu,
-#         'title': 'Отображение по рубрикам',
-#         'cat_selected': cat_slug,
-#     }
-#     return render(request, 'women/index.html', context=context)
-
-
-def show_category(request, cat_id):
-    posts = Women.objects.filter(
-        cat_id=cat_id)  # Подключаемся к БД Women, считываем все значения и передаем в шаблон переменные
+def show_category(request, cat_slug):
+    """
+    Функция отображения постов по категориям, выбирает по slug-ам
+    """
+    cat = Category.objects.get(slug=cat_slug)
+    posts = Women.objects.filter(cat_id=cat.id)
 
     if len(posts) == 0:  # если нет такой категории, генерирует "Страница на найдена"
         raise Http404()
@@ -81,7 +74,8 @@ def show_category(request, cat_id):
         'posts': posts,
         'menu': menu,
         'title': 'Отображение по рубрикам',
-        'cat_selected': cat_id,
+        'cat_selected': cat_slug,
     }
     return render(request, 'women/index.html', context=context)
+
 
