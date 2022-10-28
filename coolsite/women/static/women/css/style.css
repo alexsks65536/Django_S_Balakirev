@@ -285,7 +285,7 @@ ul#menu li a:hover
   width: 299px; 
   font: 100% arial; 
   border: 1px solid #E5E5DB; 
-  background: #FFF; 
+  background: #FFF;
   color: #47433F;}
   
 .form_settings .submit
@@ -300,7 +300,8 @@ ul#menu li a:hover
   color: #FFF;}
 
 .form_settings textarea, .form_settings select
-{ font: 100% arial; 
+{ font: 100% arial;
+  height: 300px;
   width: 299px;}
 
 .form_settings select
