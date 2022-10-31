@@ -97,7 +97,7 @@
                             {% endif %}
                             {% for p in paginator.page_range %}
                                 {% if page_obj.number == p %}
-                                    <li class="non_li">{{ p }}</li>
+                                    <li id="non_li" class="non_li">{{ p }}</li>
                                 {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}<!--обрезание по 2 ссылки-->
                                     <li class="non_li">
                                         <a href="?page={{ p }}">{{ p }}</a>

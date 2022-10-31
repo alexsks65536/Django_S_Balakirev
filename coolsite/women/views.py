@@ -174,6 +174,19 @@ class WomenCategory(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
 
 
+class CssExample(DataMixin, ListView):
+    model = Women
+    template_name = 'women/css_example.html'
+    # context_object_name = 'about'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Передача динамического контекста
+        """
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Проверка стилей")
+        return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
+
 # def show_category(request, cat_slug):
 #     """
 #     Функция отображения постов по категориям, выбирает по slug-ам

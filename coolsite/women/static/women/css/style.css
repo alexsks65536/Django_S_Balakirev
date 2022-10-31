@@ -67,7 +67,7 @@ ul
 { margin: 2px 0 22px 17px;}
 
 ul li
-{ list-style-type: circle;
+{ list-style-type: none;
   margin: 0 0 6px 0; 
   padding: 0 0 4px 5px;
   line-height: 1.5em;}
@@ -383,7 +383,7 @@ ul#page_menu li.selected a, ul#page_menu li.selected a:hover
 ul#page_menu li a:hover
 { color: #B48A7C;}
 
-.non_li {
+.non_li li{
     list-style-type: none;
     display: inline-block;
 }

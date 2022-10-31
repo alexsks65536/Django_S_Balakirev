@@ -6,6 +6,7 @@ from women.models import *
 menu = [{'title': 'О сайте', 'url_name': 'about'},
         {'title': 'Добавить статью', 'url_name': 'addpage'},
         {'title': 'Обратная связь', 'url_name': 'contact'},
+        {'title': 'Проверка стилей', 'url_name': 'css_example'},
         {'title': 'Войти', 'url_name': 'login'},
         ]
 
