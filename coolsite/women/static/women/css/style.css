@@ -339,3 +339,51 @@ table tr td
     float:left; /* Выравнивание по левому краю */
     margin: 7px 7px 7px 0; /* Отступы вокруг картинки */
    }
+
+#page_menubar
+{ width: 872px;
+  height: 45px;
+  padding-right: 8px;
+  background: #2D2D2D;
+  border-top: 1px solid #3D3D3D;}
+
+ul#page_menu
+{ float: left;
+  margin: 0;}
+
+ul#page_menu li
+{ float: left;
+  padding: 0 0 0 9px;
+  list-style: none;
+  margin: 8px 4px 0 4px;}
+
+ul#page_menu li a
+{ font: normal 100% 'trebuchet ms', sans-serif;
+  display: block;
+  float: left;
+  height: 20px;
+  padding: 6px 20px 5px 20px;
+  text-align: center;
+  color: #FFF;
+  text-decoration: none;
+  background: #5E4238;}
+
+ul#page_menu li.selected a
+{ height: 20px;
+  padding: 6px 20px 5px 11px;}
+
+ul#page_menu li.selected
+{ margin: 8px 4px 0 13px;
+  background: #B48A7C;}
+
+ul#page_menu li.selected a, ul#page_menu li.selected a:hover
+{ background: #B48A7C;
+  color: #FFF;}
+
+ul#page_menu li a:hover
+{ color: #B48A7C;}
+
+.non_li {
+    list-style-type: none;
+    display: inline-block;
+}

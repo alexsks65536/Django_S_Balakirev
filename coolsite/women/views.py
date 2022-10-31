@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from .forms import AddPostForm
 from .models import *
@@ -29,6 +30,20 @@ class WomenHome(DataMixin, ListView):
         return Women.objects.filter(is_published=True)
 
 
+class WomenAbout(DataMixin, ListView):
+    model = Women
+    template_name = 'women/about.html'
+    # context_object_name = 'about'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Передача динамического контекста
+        """
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="О сайте")
+        return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
+
+
 # def index(request):  # HttpRequest
 #     posts = Women.objects.all()  # Подключаемся к БД Women, считываем все значения и передаем в шаблон переменные
 #
@@ -40,8 +55,8 @@ class WomenHome(DataMixin, ListView):
 #     return render(request, 'women/index.html', context=context)
 
 
-def about(request):  # HttpRequest
-    return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
+# def about(request):  # HttpRequest
+#     return render(request, 'women/about.html', {'menu': menu, 'title': 'О сайте'})
 
 
 class AddPage(LoginRequiredMixin, DataMixin, CreateView):
@@ -75,13 +90,38 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
 #         form = AddPostForm()
 #     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
 
+class WomenContact(DataMixin, ListView):
+    model = Women
+    template_name = 'women/contact.html'
+    context_object_name = 'posts'
 
-def contact(request):
-    return HttpResponse('Обратная связь')
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Передача динамического контекста
+        """
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Контакты")
+        return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
 
 
-def login(request):
-    return HttpResponse('Авторизация')
+# def contact(request):
+#     return HttpResponse('Обратная связь')
+
+class WomenLogin(DataMixin, ListView):
+    model = Women
+    template_name = 'women/login.html'
+    context_object_name = 'posts'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        Передача динамического контекста
+        """
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title="Авторизация")
+        return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
+
+# def login(request):
+#     return HttpResponse('Авторизация')
 
 
 def pageNotFound(request, exception):
