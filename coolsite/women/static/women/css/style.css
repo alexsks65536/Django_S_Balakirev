@@ -232,10 +232,16 @@ ul#menu li a:hover
 #content ul
 { margin: 2px 0 22px 0px;}
 
-#content ul li, .sidebar ul li
+#content ul li
+{ list-style-type: none;
+  margin: 0 0 0 0;
+  padding: 0 0 4px 25px;
+  line-height: 1.5em;}
+
+.sidebar ul li
 { list-style-type: none;
   background: url(/static/women/images/bullet.png) no-repeat;
-  margin: 0 0 0 0; 
+  margin: 0 0 0 0;
   padding: 0 0 4px 25px;
   line-height: 1.5em;}
 
@@ -314,6 +320,18 @@ ul#menu li a:hover
   border: 0;
   background: none;}
 
+.form-input {
+  font: 100% arial;
+  height: 20px;
+  width: 200px;
+  color: #545454;
+}
+
+.form-error {
+  font: 110% arial;
+  color: red;
+}
+
 .separator
 { width: 100%;
   height: 0;
@@ -382,8 +400,3 @@ ul#page_menu li.selected a, ul#page_menu li.selected a:hover
 
 ul#page_menu li a:hover
 { color: #B48A7C;}
-
-.non_li li{
-    list-style-type: none;
-    display: inline-block;
-}

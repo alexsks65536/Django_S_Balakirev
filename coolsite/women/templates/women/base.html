@@ -27,11 +27,10 @@
             <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
             {% for m in menu %}
                 {% if not forloop.last %}
-                    <li class=""><a href="{% url m.url_name %}">{{m.title}}</a></li>
-                {% else %}
-                    <li class=""><a href="{% url m.url_name %}">{{ m.title }}</a></li>
+                    <li><a href="{% url m.url_name %}">{{m.title}}</a></li>
                 {% endif %}
-            {% endfor %}
+             {% endfor %}
+                    <li><a href="{% url 'register' %}">Регистрация</a> | <a href="{% url 'login' %}">Войти</a></li>
           </ul>
       </div>
         {% endblock mainmenu %}
@@ -91,21 +90,21 @@
                     <div id="page_menubar">
                         <ul id="page_menu">
                             {% if page_obj.has_previous %} <!--отображение стрелок  <  ...   -->
-                                <li class="">
+                                <li>
                                     <a href="?page={{ page_obj.previous_page_number }}">&lt</a>
                                 </li>
                             {% endif %}
                             {% for p in paginator.page_range %}
                                 {% if page_obj.number == p %}
-                                    <li id="non_li" class="non_li">{{ p }}</li>
+                                    <li>{{ p }}</li>
                                 {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}<!--обрезание по 2 ссылки-->
-                                    <li class="non_li">
+                                    <li>
                                         <a href="?page={{ p }}">{{ p }}</a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
                             {% if page_obj.has_next %} <!--отображение стрелок    ... >  -->
-                                <li class="">
+                                <li>
                                     <a href="?page={{ page_obj.next_page_number }}">&gt</a>
                                 </li>
                             {% endif %}

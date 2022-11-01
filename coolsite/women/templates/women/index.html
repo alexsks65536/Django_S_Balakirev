@@ -14,7 +14,7 @@
                 {% autoescape off %}  <!-- Отключение экранирования тегов в Django-->
                 <p>{{ p.content|linebreaks|truncatewords:50 }}</p>  <!-- linebreaks - фильтр для абзацев -->
                 {% endautoescape %}
-                <div class="clear"></div>
+                <div class=""></div>
                 <!--<p class=""><a href="{% url 'post' p.pk %}">Читать пост</a></p> Это первый способ -->
                 <p class=""><a href="{{ p.get_absolute_url }}">Читать пост</a></p>
                 <hr>
