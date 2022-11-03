@@ -329,7 +329,8 @@ ul#menu li a:hover
 
 .form-error {
   font: 110% arial;
-  color: red;
+  font-weight: 900;
+  color: #ab4646;
 }
 
 .separator
@@ -362,7 +363,7 @@ table tr td
 { width: 872px;
   height: 45px;
   padding-right: 8px;
-  background: #2D2D2D;
+  background: #FFFFFF;
   border-top: 1px solid #3D3D3D;}
 
 ul#page_menu
@@ -391,8 +392,15 @@ ul#page_menu li.selected a
   padding: 6px 20px 5px 11px;}
 
 ul#page_menu li.selected
-{ margin: 8px 4px 0 13px;
-  background: #B48A7C;}
+{ font: normal 100% 'trebuchet ms', sans-serif;
+  margin: 8px 4px 0 13px;
+  display: block;
+  float: left;
+  color: #FFF;
+  height: 20px;
+  padding: 6px 20px 5px 20px;
+  text-align: center;
+  background: #ac7967;}
 
 ul#page_menu li.selected a, ul#page_menu li.selected a:hover
 { background: #B48A7C;
