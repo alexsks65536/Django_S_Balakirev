@@ -1,0 +1,119 @@
+Консоль Python
+запуск оболочки Django
+python manage.py shell
+from women.models import *  #  подключаем модель
+Women.objects.all()   #   выборка всех записей
+Women.objects.all()[:5]  # выборка первых пяти записей
+from django.db import connection
+connection.queries  # посмотреть последний SQL-запрос
+Women.objects.all()[3:8]  # срез с 3 до 8
+Women.objects.order_by('pk')  # выборка с сортировкой по первичному ключу
+Women.objects.order_by('-pk')  # выборка с обратной сортировкой по первичному ключу
+Women.objects.all().reverse()  # выборка с обратной сортировкой
+Women.objects.filter(pk__lte=2)  # выборка всех записей где первичный ключ меньше либо равен 2
+Women.objects.get(pk=2)  # выборка из базы записи с pk=2
+
+# * WHERE *
+Women.objects.filter(pk__gte=2)
+Women.objects.filter(pk__gt=2)
+Women.objects.get(pk=1)
+w = Women.objects.get(pk=1)
+w.cat
+w.cat.name
+
+# * Обратная связь модели "Category" с моделью "Women" *
+c = Category.objects.get(pk=1)
+c.women_set
+c.women_set.all()
+
+# * LIKE, iLIKE *
+Women.objects.filter(title__contains='ли')    # LIKE
+Women.objects.filter(title__icontains='ли')   # iLIKE
+Women.objects.filter(pk__in=[1,2,3])     # IN
+Women.objects.filter(pk__in=[1,2,3], is_published=True)   # AND
+cats = Category.objects.filter(pk__gt=2)
+Women.objects.filter(cat__in=cats)
+
+# * AND, OR, NOT, Q import *
+from django.db.models import Q
+Women.objects.filter(Q(pk__gt=3) | Q(cat_id__gt=4))  # & - ADN,  | - OR, ~ - NOT
+Women.objects.filter(~Q(pk=1) | Q(cat_id=2))
+Women.objects.filter(~Q(pk=1) & Q(cat_id=2))
+Women.objects.first()
+
+# * FIRST, LAST *
+Women.objects.order_by('pk').first()
+Women.objects.order_by('-pk').first()
+Women.objects.last()
+
+# * DATE, TIME *
+Women.objects.latest('time_update')  # первая по времени добавления
+Women.objects.earliest('time_update')  # последняя по времени добавления
+Women.objects.order_by('title').earliest('time_update')
+# * INTERVAL *
+a = Women.objects.get(pk=2)
+a.get_previous_by_название_поля
+a.get_next_by_название_поля
+a.get_previous_by_time_update()
+a.get_next_by_time_update()
+a.get_next_by_time_update(pk__gt=6)
+
+# * EXISTS, COUNT *
+Category.objects.create(name="Спортсменки", slug="sportsmenky")
+c = Category.objects.get(pk=3)
+c.women_set.exists()     #* True если есть записи в категории
+c.women_set.count()     #* количество записей в категории
+Women.objects.filter(pk__gt=1).count()
+Women.objects.filter(cat__in=[1]) #* Обращение к id Категории через Новости
+Women.objects.filter(cat__name='Певицы')
+Women.objects.filter(cat__name__contains='ы')
+
+Category.objects.filter(women__title__contains='ли')
+Category.objects.filter(women__title__contains='ли').distinct() # Уникальные категории
+
+# * Агрегирующие функции *
+from django.db.models import *
+
+Women.objects.count()
+Women.objects.aggregate(Min('cat_id'))
+Women.objects.aggregate(Min('cat_id'), Max('cat_id'))
+Women.objects.aggregate(max=Min('cat_id'),min=Max('cat_id'))
+Women.objects.aggregate(res=Sum('cat_id') - Count('cat_id'))
+Women.objects.aggregate(avg=Avg('cat_id')
+Women.objects.filter(pk__gt=2).aggregate(avg=Avg('cat_id'))
+
+* Выбор некоторых полей *
+Women.objects.values('title', 'cat_id').get(pk=2)
+
+* Выбор из связанной модели *
+Women.objects.values('title', 'cat__name').get(pk=3)
+Women.objects.values('title', 'cat__slug').get(pk=3)
+
+* GROUP BY, Annotate *
+SELECT COUNT(id) FROM Women GROUP BY cat_id
+Women.objects.values('cat_id').annotate(Count('id'))
+
+c = Category.objects.annotate(total=Count('Women'))
+len(c)
+c[0].total
+
+ c = Category.objects.annotate(total=Count('Women')).filter(total__gt=0)
+
+ * Класс F *
+from django.db.models import F
+Women.objects.filter(pk__gt=F('cat_id'))  * Сравнение полей таблицы
+
+# * Length *
+from django.db.models.functions import Length
+l = Women.objects.annotate(len=Length('title'))
+l = [{'title': '...', 'len':9},{...},{...}]
+for x in l:
+     print(x.title, x.len)
+
+# * RAW SQL *
+Women.objects.raw('SELECT * FROM Women_Women')
+a = _
+for item in a:
+    print(item.pk, item.title)
+
+Women.objects.raw("SELECT id, title FROM Women_Women WHERE slug='%s'", [slug])
