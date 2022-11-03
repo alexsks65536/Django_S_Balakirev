@@ -57,11 +57,13 @@
         <div class="sidebar">
           <div class="sidebar_top"></div>
             <!-- Категории -->
+            <!--{% load cache %}-->
           <div class="sidebar_item">
             <h3>Категории</h3>
              <!--  {% getcats as categories %}  вызываем пользовательский тег и создаем ссылку-->
                 {% block leftmenu %}
                     <ul class="">
+            <!--{% cache 60 sidebar %}-->
                         {% if cat_selected == 0 %}
                             <li class="selected">Все категории</li>
                         {% else %}
@@ -70,7 +72,9 @@
 
                         {% show_categories 'name' cat_selected %}  <!-- вызываем включающий тег -->
                     </ul>
+            <!--{% endcache %}-->
                 {% endblock leftmenu %}
+
           </div>
           <div class="sidebar_base"></div>
         </div>
