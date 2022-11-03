@@ -30,12 +30,14 @@ class WomenHome(DataMixin, ListView):
         """
         Выбор постов, которые помечены для публикации
         """
-        return Women.objects.filter(is_published=True)
+        return Women.objects.filter(is_published=True).select_related('cat')
+        # select_related - отложенный запрос для уменьшения нагрузки на БД
 
 
 class WomenAbout(DataMixin, ListView):
     model = Women
     template_name = 'women/about.html'
+
     # context_object_name = 'about'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -148,14 +150,15 @@ class WomenCategory(DataMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title='Категория - ' + str(context['posts'][0].cat),
-                                      cat_selected=context['posts'][0].cat_id)
+        c = Category.objects.get(slug=self.kwargs['cat_slug'])  # делаем "жадный" запрос по слагу
+        c_def = self.get_user_context(title='Категория - ' + str(c.name), cat_selected=c.pk)
         return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
 
 
 class CssExample(DataMixin, ListView):
     model = Women
     template_name = 'women/css_example.html'
+
     # context_object_name = 'about'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -165,6 +168,7 @@ class CssExample(DataMixin, ListView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Проверка стилей")
         return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
+
 
 # def show_category(request, cat_slug):
 #     """
