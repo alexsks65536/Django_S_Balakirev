@@ -4,11 +4,11 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 
-from .forms import AddPostForm, RegisterUserForm
+from .forms import AddPostForm, RegisterUserForm, ContactForm
 from .models import *
 from .utils import *
 
@@ -91,18 +91,22 @@ class AddPage(LoginRequiredMixin, DataMixin, CreateView):
 #         form = AddPostForm()
 #     return render(request, 'women/addpage.html', {'form': form, 'menu': menu, 'title': 'Добавление статьи'})
 
-class WomenContact(DataMixin, ListView):
-    model = Women
+class ContactFormView(DataMixin, FormView):
+    form_class = ContactForm
     template_name = 'women/contact.html'
-    context_object_name = 'posts'
+    success_url = reverse_lazy('home')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """
         Передача динамического контекста
         """
         context = super().get_context_data(**kwargs)
-        c_def = self.get_user_context(title="Контакты")
+        c_def = self.get_user_context(title="Обратная связь")
         return dict(list(context.items()) + list(c_def.items()))  # объединение словарей для передачи контекста
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return redirect('home')
 
 
 def pageNotFound(request, exception):
